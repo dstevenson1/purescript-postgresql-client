@@ -162,7 +162,7 @@ else instance toSQLValueJSDate :: ToSQLValue JSDate where
     toSQLValue = unsafeToForeign
 
 else instance toSQLValueMaybe :: (ToSQLValue a) => ToSQLValue (Maybe a) where
-    toSQLValue Nothing = null
+    toSQLValue Nothing = nullValue
     toSQLValue (Just x) = toSQLValue x
 
 else instance toSQLValueForeign :: ToSQLValue Foreign where
@@ -183,7 +183,7 @@ else instance toSQLValueJson :: ToSQLValue Json where
 newtypeToSQLValue ∷ ∀ a b. Newtype a b ⇒ ToSQLValue b ⇒ a → Foreign
 newtypeToSQLValue = unwrap >>> toSQLValue
 
-foreign import null :: Foreign
+foreign import nullValue :: Foreign
 foreign import instantToString :: Instant -> Foreign
 foreign import instantFromString :: (String -> Either String Number) -> (Number -> Either String Number) -> Foreign -> Either String Number
 foreign import unsafeIsBuffer :: ∀ a. a -> Boolean
